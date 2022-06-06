@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class Meteo {
+public class Seance {
 
     @Id
     @GeneratedValue
     private Integer id;
-
-    private String label;
+    private Integer meteoId;
+    private String Titre;
     private String description;
 
 }
