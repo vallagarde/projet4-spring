@@ -14,6 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import Pecadillo.isika.al.security.jwt.AuthEntryPointJwt;
+import Pecadillo.isika.al.security.jwt.AuthTokenFilter;
+import Pecadillo.isika.al.security.services.UserDetailsServiceImpl;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
