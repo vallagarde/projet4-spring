@@ -25,6 +25,7 @@ import Pecadillo.isika.al.security.services.UserDetailsServiceImpl;
 		// jsr250Enabled = true,
 		prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
 	@Autowired
