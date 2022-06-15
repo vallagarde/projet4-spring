@@ -35,6 +35,9 @@ public class User {
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 	
+	@OneToMany(mappedBy="user")
+	private Set<Seance> seances;
+	
 	public User() {
 	}
 	

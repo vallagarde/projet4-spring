@@ -25,8 +25,8 @@ import Pecadillo.isika.al.security.services.UserDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-		// securedEnabled = true,
-		// jsr250Enabled = true,
+		securedEnabled = true,
+		jsr250Enabled = true,
 		prePostEnabled = true)
 public class WebSecurityConfig {
 	
@@ -54,13 +54,20 @@ public class WebSecurityConfig {
 	
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		// Enable CORS and disable CSRF
 		http.cors().and().csrf().disable()
 			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.authorizeRequests().antMatchers("/api/auth/**").permitAll()
-			.antMatchers("/api/test/**").permitAll()
-			.anyRequest().authenticated();
-		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and(); // Set session management to stateless (mandatory to use JWT)
+			
+			// Add JWT token filter
+			http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+		
+			http.authorizeRequests() // Set permissions on endpoints . Next are the public endpoints
+			.antMatchers("/api/auth/**").permitAll() // one public endpoint
+			.antMatchers("/api/test/**").permitAll() // one public endpoint
+			.anyRequest().authenticated(); // one private endpoint
+		
+		
 		return http.build();
 	}
 }
