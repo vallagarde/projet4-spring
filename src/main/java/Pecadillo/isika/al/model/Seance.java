@@ -35,13 +35,7 @@ public class Seance {
 	 @JoinColumn(name="user_id", nullable=false)
 	 private  User user;
 
-	 public Seance(SeanceRequest seance) {
-		 this.description=seance.getDescription();
-		 this.meteoId=seance.getMeteoId();
-		 this.prises=seance.getPrises();
-		 this.Titre= seance.getTitre();
-		 
-	 }
+
 	 
 }
 

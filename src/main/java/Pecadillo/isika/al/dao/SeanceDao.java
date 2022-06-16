@@ -8,5 +8,5 @@ import Pecadillo.isika.al.model.Seance;
 
 
 @Repository
-public interface SeanceDao extends JpaRepository<Seance, Integer> {
+public interface SeanceDao extends JpaRepository<Seance, Long> {
 }

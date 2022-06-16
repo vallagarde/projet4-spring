@@ -65,6 +65,7 @@ public class WebSecurityConfig {
 			http.authorizeRequests() // Set permissions on endpoints . Next are the public endpoints
 			.antMatchers("/api/auth/**").permitAll() // one public endpoint
 			.antMatchers("/api/test/**").permitAll() // one public endpoint
+			.antMatchers("/api/seance/**").hasAnyRole("USER")
 			.anyRequest().authenticated(); // one private endpoint
 		
 		

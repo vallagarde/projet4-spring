@@ -8,16 +8,20 @@ import Pecadillo.isika.al.model.Prise;
 
 public class SeanceRequest {
 	
-	@NotBlank
     private Integer meteoId;
     
 	@NotBlank
-    private String Titre;
+    private String titre;
     
 	@NotBlank
     private String description;
+	
+	
+	private String userEmail;
     
     private Set<Prise> prises;
+    
+    
 
 	public Integer getMeteoId() {
 		return meteoId;
@@ -28,11 +32,11 @@ public class SeanceRequest {
 	}
 
 	public String getTitre() {
-		return Titre;
+		return titre;
 	}
 
 	public void setTitre(String titre) {
-		Titre = titre;
+		this.titre = titre;
 	}
 
 	public String getDescription() {
@@ -50,6 +54,22 @@ public class SeanceRequest {
 	public void setPrises(Set<Prise> prises) {
 		this.prises = prises;
 	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	@Override
+	public String toString() {
+		return "SeanceRequest [meteoId=" + meteoId + ", titre=" + titre + ", description=" + description
+				+ ", userEmail=" + userEmail + ", prises=" + prises + "]";
+	}
+
+
     
 
 }
