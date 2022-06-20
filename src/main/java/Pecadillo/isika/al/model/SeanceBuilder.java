@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import Pecadillo.isika.al.dao.PriseDao;
 import Pecadillo.isika.al.dao.UserRepository;
 import Pecadillo.isika.al.exception.UserNotFindException;
 import Pecadillo.isika.al.payload.request.SeanceRequest;
@@ -15,6 +16,12 @@ public class SeanceBuilder {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	PriseDao priseJpa;
+	
+	@Autowired 
+	PrisesBuilder prisesBuilder;
+	
 	
 
 	public Seance SeanceBuild(SeanceRequest seance) throws UserNotFindException {
@@ -22,7 +29,7 @@ public class SeanceBuilder {
 		Seance newSeance = new Seance();
 		newSeance.setDescription(seance.getDescription());
 		newSeance.setMeteoId( seance.getMeteoId());
-		newSeance.setPrises( seance.getPrises());
+		//newSeance.setPrises(seance.getPrises());
 		newSeance.setTitre(seance.getTitre());
 		
 		Optional<User> gotUser = userRepository.findByEmail(seance.getUserEmail());

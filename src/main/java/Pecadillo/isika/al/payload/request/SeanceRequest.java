@@ -10,6 +10,8 @@ public class SeanceRequest {
 	
     private Integer meteoId;
     
+    private Integer meteoIndex;
+    
 	@NotBlank
     private String titre;
     
@@ -62,12 +64,23 @@ public class SeanceRequest {
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
+	
+
+	public Integer getMeteoIndex() {
+		return meteoIndex;
+	}
+
+	public void setMeteoIndex(Integer meteoIndex) {
+		this.meteoIndex = meteoIndex;
+	}
 
 	@Override
 	public String toString() {
-		return "SeanceRequest [meteoId=" + meteoId + ", titre=" + titre + ", description=" + description
-				+ ", userEmail=" + userEmail + ", prises=" + prises + "]";
+		return "SeanceRequest [meteoId=" + meteoId + ", meteoIndex=" + meteoIndex + ", titre=" + titre
+				+ ", description=" + description + ", userEmail=" + userEmail + ", prises=" + prises + "]";
 	}
+
+
 
 
     

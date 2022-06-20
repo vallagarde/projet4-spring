@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import Pecadillo.isika.al.dao.PriseDao;
 import Pecadillo.isika.al.dao.SeanceDao;
 import Pecadillo.isika.al.exception.UserNotFindException;
+import Pecadillo.isika.al.model.Prise;
 import Pecadillo.isika.al.model.Seance;
 import Pecadillo.isika.al.model.SeanceBuilder;
 import Pecadillo.isika.al.payload.request.SeanceRequest;
@@ -27,6 +29,9 @@ public class SeanceController {
 	
 	@Autowired
 	private SeanceDao seanceJpa;
+	
+	@Autowired 
+	PriseDao priseJpa;
 	
 	@Autowired
 	private SeanceBuilder seanceBuilder;
@@ -44,7 +49,15 @@ public class SeanceController {
 			e.printStackTrace();
 		}
 
+		
+		
+		
         Seance savedSeance = seanceJpa.save(seance);
+        
+        for (Prise prise : seanceRequest.getPrises()) {
+        	prise.setSeance(savedSeance);
+        	priseJpa.save(prise);
+        }
 
         System.out.println(savedSeance);
 
