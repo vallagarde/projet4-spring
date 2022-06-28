@@ -17,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import Pecadillo.isika.al.security.services.UserDetailsServiceImpl;
 
-public class AuthTokenFilter extends OncePerRequestFilter {
+public class AuthTokenFilter extends OncePerRequestFilter { //ce filtre s'active a chaque requete
 	
 	
 	@Autowired
@@ -53,4 +53,16 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 		}
 		return null;
 	}
+	
+	public String getUserfromJwt(HttpServletRequest request) {
+		String headerAuth = request.getHeader("Authorization");
+		if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
+			String jwt = headerAuth.substring(7, headerAuth.length());
+			return jwtUtils.getUserNameFromJwtToken(jwt);
+
+		}
+		return null;
+	}
+	
+	
 }

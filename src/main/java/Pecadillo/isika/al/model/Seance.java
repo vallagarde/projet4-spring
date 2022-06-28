@@ -9,12 +9,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import Pecadillo.isika.al.payload.request.SeanceRequest;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Seance {
 
@@ -28,7 +33,12 @@ public class Seance {
     
     private String description;
     
+    private Long latitude;
+    
+    private Long longitude;
+    
     @OneToMany(mappedBy="seance")
+    @JsonManagedReference
     private Set<Prise> prises;
     
 	 @ManyToOne
