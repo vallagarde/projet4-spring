@@ -23,6 +23,10 @@ public class SeanceRequest {
     
     private Set<Prise> prises;
     
+    private Long latitude;
+    
+    private Long longitude;
+    
     
 
 	public Integer getMeteoId() {
@@ -72,6 +76,23 @@ public class SeanceRequest {
 
 	public void setMeteoIndex(Integer meteoIndex) {
 		this.meteoIndex = meteoIndex;
+	}
+
+
+	public Long getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Long latitude) {
+		this.latitude = latitude;
+	}
+
+	public Long getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Long longitude) {
+		this.longitude = longitude;
 	}
 
 	@Override

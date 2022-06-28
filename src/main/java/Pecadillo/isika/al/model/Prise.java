@@ -6,8 +6,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
@@ -24,6 +28,7 @@ public class Prise {
 	 
 	 @ManyToOne
 	 @JoinColumn(name="seance_id", nullable=false)
+	 @JsonBackReference
 	 private Seance seance;
 
 }

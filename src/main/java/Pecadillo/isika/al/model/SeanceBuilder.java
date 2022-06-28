@@ -31,6 +31,9 @@ public class SeanceBuilder {
 		newSeance.setMeteoId( seance.getMeteoId());
 		//newSeance.setPrises(seance.getPrises());
 		newSeance.setTitre(seance.getTitre());
+		newSeance.setLatitude(seance.getLatitude());
+		newSeance.setLongitude(seance.getLongitude());
+		
 		
 		Optional<User> gotUser = userRepository.findByEmail(seance.getUserEmail());
 		
