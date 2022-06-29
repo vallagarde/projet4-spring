@@ -38,6 +38,11 @@ public class User {
 	@OneToMany(mappedBy="user")
 	private Set<Seance> seances;
 	
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+     
+    private boolean enabled;
+	
 	public User() {
 	}
 	
@@ -77,4 +82,30 @@ public class User {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+
+	public Set<Seance> getSeances() {
+		return seances;
+	}
+
+	public void setSeances(Set<Seance> seances) {
+		this.seances = seances;
+	}
+
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+	
 }
