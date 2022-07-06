@@ -27,6 +27,8 @@ public class SeanceRequest {
     
     private double longitude;
     
+    private String date;
+    
     
 
 	public String getMeteoId() {
@@ -94,12 +96,22 @@ public class SeanceRequest {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
+	
+	
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
 
 	@Override
 	public String toString() {
 		return "SeanceRequest [meteoId=" + meteoId + ", meteoIndex=" + meteoIndex + ", titre=" + titre
 				+ ", description=" + description + ", userEmail=" + userEmail + ", prises=" + prises + ", latitude="
-				+ latitude + ", longitude=" + longitude + "]";
+				+ latitude + ", longitude=" + longitude + ", date=" + date + "]";
 	}
 
 

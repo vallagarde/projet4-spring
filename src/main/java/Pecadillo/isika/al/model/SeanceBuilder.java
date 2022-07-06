@@ -1,5 +1,8 @@
 package Pecadillo.isika.al.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +27,7 @@ public class SeanceBuilder {
 	
 	
 
-	public Seance SeanceBuild(SeanceRequest seance) throws UserNotFindException {
+	public Seance SeanceBuild(SeanceRequest seance) throws UserNotFindException, ParseException {
 
 		Seance newSeance = new Seance();
 		newSeance.setDescription(seance.getDescription());
@@ -34,6 +37,8 @@ public class SeanceBuilder {
 		newSeance.setTitre(seance.getTitre());
 		newSeance.setLatitude(seance.getLatitude());
 		newSeance.setLongitude(seance.getLongitude());
+		Date dateInterm = new SimpleDateFormat("dd/MM/yyyy").parse(seance.getDate());
+		newSeance.setDate(dateInterm);
 		
 		
 		Optional<User> gotUser = userRepository.findByEmail(seance.getUserEmail());
