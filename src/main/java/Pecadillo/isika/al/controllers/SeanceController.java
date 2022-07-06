@@ -1,5 +1,6 @@
 package Pecadillo.isika.al.controllers;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +57,7 @@ public class SeanceController {
 	
 	
 	@PostMapping("/seances")
-    public ResponseEntity<Void> createSeance(@Valid @RequestBody SeanceRequest seanceRequest){
+    public ResponseEntity<Void> createSeance(@Valid @RequestBody SeanceRequest seanceRequest) throws ParseException{
 
 		LOGGER.info(seanceRequest.toString());
 		
