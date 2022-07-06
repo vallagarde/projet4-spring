@@ -29,6 +29,7 @@ public class SeanceBuilder {
 		Seance newSeance = new Seance();
 		newSeance.setDescription(seance.getDescription());
 		newSeance.setMeteoId( seance.getMeteoId());
+		newSeance.setMeteoIndex(seance.getMeteoIndex());
 		//newSeance.setPrises(seance.getPrises());
 		newSeance.setTitre(seance.getTitre());
 		newSeance.setLatitude(seance.getLatitude());

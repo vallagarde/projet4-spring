@@ -5,6 +5,8 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(	name = "users", 
 		uniqueConstraints = { 
@@ -29,6 +31,19 @@ public class User {
 	@Size(max = 120)
 	private String password;
 	
+	private String prenom;
+	
+	private String nom;
+	
+	private String adresse;
+	
+	private String ville;
+	
+	private String pays;
+	
+	private Integer codePostal;
+	
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
 				joinColumns = @JoinColumn(name = "user_id"), 
@@ -36,12 +51,15 @@ public class User {
 	private Set<Role> roles = new HashSet<>();
 	
 	@OneToMany(mappedBy="user")
+	@JsonManagedReference
 	private Set<Seance> seances;
 	
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
      
     private boolean enabled;
+    
+    
 	
 	public User() {
 	}
@@ -105,6 +123,54 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+	public String getVille() {
+		return ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+	public String getPays() {
+		return pays;
+	}
+
+	public void setPays(String pays) {
+		this.pays = pays;
+	}
+
+	public Integer getCodePostal() {
+		return codePostal;
+	}
+
+	public void setCodePostal(Integer codePostal) {
+		this.codePostal = codePostal;
 	}
 	
 	

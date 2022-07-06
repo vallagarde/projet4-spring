@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +20,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +31,10 @@ import Pecadillo.isika.al.model.Role;
 import Pecadillo.isika.al.model.User;
 import Pecadillo.isika.al.payload.request.LoginRequest;
 import Pecadillo.isika.al.payload.request.SignupRequest;
+import Pecadillo.isika.al.payload.request.UserUpdateRequest;
 import Pecadillo.isika.al.payload.response.JwtResponse;
 import Pecadillo.isika.al.payload.response.MessageResponse;
+import Pecadillo.isika.al.security.jwt.AuthTokenFilter;
 import Pecadillo.isika.al.security.jwt.JwtUtils;
 import Pecadillo.isika.al.security.services.UserDetailsImpl;
 import Pecadillo.isika.al.service.UserService;
@@ -42,7 +44,9 @@ import Pecadillo.isika.al.service.UserService;
 @RequestMapping("/api/auth")
 public class AuthController {
 	
-	private static final String SITE_URL = "http://localhost:4200";
+	private static final Logger  LOGGER = Logger.getLogger(AuthController.class);
+
+	private static final String SITE_URL = "https://d2zc4b6lihmqgc.cloudfront.net";
 
 	@Autowired
 	AuthenticationManager authenticationManager;
@@ -62,6 +66,9 @@ public class AuthController {
 	@Autowired
 	JwtUtils jwtUtils;
 	
+	@Autowired
+	AuthTokenFilter authTokenFilter;
+	
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 		
@@ -77,11 +84,19 @@ public class AuthController {
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
+		User user = userService.getUserbyUsername( userDetails.getUsername()).get();
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 												 userDetails.getId(), 
 												 userDetails.getUsername(), 
 												 userDetails.getEmail(), 
-												 roles));
+												 roles,
+												 user.getPrenom(),
+												 user.getNom(),
+												 user.getAdresse(),
+												 user.getVille(),
+												 user.getPays(),
+												 user.getCodePostal()
+												 ));
 	}
 	
 	@PostMapping("/signup")
@@ -115,15 +130,26 @@ public class AuthController {
         return siteURL.replace(request.getServletPath(), "");
     }  
     
+    @PostMapping("/updateuser")
+	public ResponseEntity<?> updateUser(@RequestBody UserUpdateRequest userUpdateRequest,  HttpServletRequest request) {
+    	
+    	System.out.println("rentrer dans le update");
+    	
+    	LOGGER.info(userUpdateRequest.toString());
+    	String username = authTokenFilter.getUserfromJwt(request);
+    	
+    	userService.saveAndFlushByUsername(username, userUpdateRequest);
+    	
+    	return ResponseEntity.ok().build();
+    }
+
+
+    
     
     @PostMapping("/verify")
     public Boolean verifyUser(@RequestBody Map<String,String> code) {
     	
     	System.out.println(code.get("code"));
-        if (userService.verify(code.get("code"))) {
-            return true;
-        } else {
-            return false;
-        }
+        return userService.verify(code.get("code"));
     }
 }

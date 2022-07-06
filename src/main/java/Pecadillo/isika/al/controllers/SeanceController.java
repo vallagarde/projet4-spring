@@ -5,14 +5,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +24,7 @@ import Pecadillo.isika.al.model.SeanceBuilder;
 import Pecadillo.isika.al.payload.request.SeanceRequest;
 import Pecadillo.isika.al.security.jwt.AuthTokenFilter;
 import Pecadillo.isika.al.service.SeanceService;
+import Pecadillo.isika.al.service.UserService;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -32,11 +32,18 @@ import Pecadillo.isika.al.service.SeanceService;
 @RequestMapping("/api/seance")
 public class SeanceController {
 	
+	
+	private static final Logger  LOGGER = Logger.getLogger(SeanceController.class);
+	
 	@Autowired
 	private SeanceDao seanceJpa;
 	
 	@Autowired 
 	PriseDao priseJpa;
+	
+	
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	private SeanceBuilder seanceBuilder;
@@ -51,14 +58,14 @@ public class SeanceController {
 	@PostMapping("/seances")
     public ResponseEntity<Void> createSeance(@Valid @RequestBody SeanceRequest seanceRequest){
 
-		System.out.println(seanceRequest.toString());
+		LOGGER.info(seanceRequest.toString());
 		
 		Seance seance= new Seance();
 		
 		try {
 			seance = seanceBuilder.SeanceBuild(seanceRequest);
 		} catch (UserNotFindException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 
 		
@@ -84,5 +91,7 @@ public class SeanceController {
 		
 		return seanceService.findSeancesByUserId(username).get();
 	}
+	
+
 
 }

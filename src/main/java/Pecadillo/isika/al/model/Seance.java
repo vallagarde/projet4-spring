@@ -9,10 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import Pecadillo.isika.al.payload.request.SeanceRequest;
-import lombok.Data;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,17 +25,19 @@ public class Seance {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     
-    private Integer meteoId;
+    private String meteoId;
+    
+    private Long meteoIndex;
     
     private String Titre;
     
     private String description;
     
-    private Long latitude;
+    private double latitude;
     
-    private Long longitude;
+    private double longitude;
     
     @OneToMany(mappedBy="seance")
     @JsonManagedReference
@@ -43,6 +45,7 @@ public class Seance {
     
 	 @ManyToOne
 	 @JoinColumn(name="user_id", nullable=false)
+	 @JsonBackReference
 	 private  User user;
 
 

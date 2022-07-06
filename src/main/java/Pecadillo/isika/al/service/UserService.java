@@ -17,11 +17,14 @@ import Pecadillo.isika.al.dao.UserRepository;
 import Pecadillo.isika.al.model.ERole;
 import Pecadillo.isika.al.model.Role;
 import Pecadillo.isika.al.model.User;
+import Pecadillo.isika.al.payload.request.UserUpdateRequest;
 import net.bytebuddy.utility.RandomString;
 
 @Component
 public class UserService {
 	
+	private static final String ERROR_ROLE_IS_NOT_FOUND = "Error: Role is not found.";
+
 	@Autowired 
 	RoleRepository roleRepository;
 	
@@ -31,29 +34,46 @@ public class UserService {
 	@Autowired
     JavaMailSender mailSender;
 	
+	@Autowired 
+	UserMapper userMapper;
+	
+	public Optional<User> getUserbyUsername(String username){
+		
+		return userRepository.findByUsername(username);
+		
+	}
+	
+	public User saveAndFlushByUsername(String username, UserUpdateRequest userUpdate ){
+		
+		User user = this.getUserbyUsername(username).get();
+		user = userMapper.UserMap(user , userUpdate);
+		
+		return userRepository.saveAndFlush(user);
+		
+	}
 	
 	public String userRegister(Set<String> strRoles, Set<Role> roles, User user, String siteURL) throws UnsupportedEncodingException, MessagingException {
 		
 		if (strRoles == null) {
 			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					.orElseThrow(() -> new RuntimeException(ERROR_ROLE_IS_NOT_FOUND));
 			roles.add(userRole);
 		} else {
 			strRoles.forEach(role -> {
 				switch (role) {
 				case "admin":
 					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+							.orElseThrow(() -> new RuntimeException(ERROR_ROLE_IS_NOT_FOUND));
 					roles.add(adminRole);
 					break;
 				case "mod":
 					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+							.orElseThrow(() -> new RuntimeException(ERROR_ROLE_IS_NOT_FOUND));
 					roles.add(modRole);
 					break;
 				default:
 					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+							.orElseThrow(() -> new RuntimeException(ERROR_ROLE_IS_NOT_FOUND));
 					roles.add(userRole);
 				}
 			});
@@ -71,6 +91,7 @@ public class UserService {
 		
 	}
 	
+	//TODO trouver un moyen de rendre ça async
 	private void sendVerificationEmail(User user, String siteURL)
 	        throws MessagingException, UnsupportedEncodingException {
 	    String toAddress = user.getEmail();
@@ -118,6 +139,8 @@ public class UserService {
 	    }
 	     
 	}
+	
+	
 	
 	
 
