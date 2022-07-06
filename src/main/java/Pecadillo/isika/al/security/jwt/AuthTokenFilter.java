@@ -54,7 +54,7 @@ public class AuthTokenFilter extends OncePerRequestFilter { //ce filtre s'active
 		return null;
 	}
 	
-	public String getUserfromJwt(HttpServletRequest request) {
+	public String getUserfromJwt(HttpServletRequest request) { // custom method: permet de récupérer les informations de l'utilisateur via le jwt pour être utilisées par l'app
 		String headerAuth = request.getHeader("Authorization");
 		if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
 			String jwt = headerAuth.substring(7, headerAuth.length());

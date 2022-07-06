@@ -8,9 +8,9 @@ import Pecadillo.isika.al.model.Prise;
 
 public class SeanceRequest {
 	
-    private Integer meteoId;
+    private String meteoId;
     
-    private Integer meteoIndex;
+    private Long meteoIndex;
     
 	@NotBlank
     private String titre;
@@ -23,17 +23,17 @@ public class SeanceRequest {
     
     private Set<Prise> prises;
     
-    private Long latitude;
+    private double latitude;
     
-    private Long longitude;
+    private double longitude;
     
     
 
-	public Integer getMeteoId() {
+	public String getMeteoId() {
 		return meteoId;
 	}
 
-	public void setMeteoId(Integer meteoId) {
+	public void setMeteoId(String meteoId) {
 		this.meteoId = meteoId;
 	}
 
@@ -70,36 +70,38 @@ public class SeanceRequest {
 	}
 	
 
-	public Integer getMeteoIndex() {
+	public Long getMeteoIndex() {
 		return meteoIndex;
 	}
 
-	public void setMeteoIndex(Integer meteoIndex) {
+	public void setMeteoIndex(Long meteoIndex) {
 		this.meteoIndex = meteoIndex;
 	}
 
 
-	public Long getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Long latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
-	public Long getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Long longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
 	@Override
 	public String toString() {
 		return "SeanceRequest [meteoId=" + meteoId + ", meteoIndex=" + meteoIndex + ", titre=" + titre
-				+ ", description=" + description + ", userEmail=" + userEmail + ", prises=" + prises + "]";
+				+ ", description=" + description + ", userEmail=" + userEmail + ", prises=" + prises + ", latitude="
+				+ latitude + ", longitude=" + longitude + "]";
 	}
+
 
 
 
