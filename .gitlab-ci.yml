@@ -1,0 +1,23 @@
+stages:
+  - build
+  - deploy
+  - integration
+
+build:
+  stage: build
+  image: maven:3.8.6-jdk-11
+  script:
+    - mvn clean package
+
+deploy:
+  image: ruby
+  stage: deploy
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=projet4-spring-s --api_key=$HEROKU_STAGING_API_KEY
+
+testintegration:
+  image: bash
+  stage: integration
+  script:
+    - wget $HEROKU_STAGING_APP_URL
