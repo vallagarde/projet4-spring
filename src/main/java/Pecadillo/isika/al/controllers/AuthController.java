@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.beans.factory.annotation.Value;
 import Pecadillo.isika.al.dao.RoleRepository;
 import Pecadillo.isika.al.dao.UserRepository;
 import Pecadillo.isika.al.model.Role;
@@ -45,8 +45,9 @@ import Pecadillo.isika.al.service.UserService;
 public class AuthController {
 	
 	private static final Logger  LOGGER = Logger.getLogger(AuthController.class);
-
-	private static final String SITE_URL = "https://d2zc4b6lihmqgc.cloudfront.net";
+	
+	@Value("${pecadille.app.siteURL}")
+	private String SITE_URL;
 
 	@Autowired
 	AuthenticationManager authenticationManager;
