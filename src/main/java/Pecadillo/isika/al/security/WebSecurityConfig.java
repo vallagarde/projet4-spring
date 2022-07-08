@@ -62,6 +62,7 @@ public class WebSecurityConfig {
 			.antMatchers("/api/auth/**").permitAll() // one public endpoint
 			.antMatchers("/api/test/**").permitAll() // one public endpoint
 			.antMatchers("/api/seance/**").hasAnyRole("USER")
+			.antMatchers("/api/meteo/**").hasAnyRole("USER")
 			.anyRequest().authenticated(); // one private endpoint
 		
 		

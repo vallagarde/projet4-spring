@@ -54,6 +54,11 @@ public class User {
 	@JsonManagedReference
 	private Set<Seance> seances;
 	
+	
+	@OneToMany(mappedBy="user")
+	@JsonManagedReference
+	private Set<MeteoPreference> meteoPreferences;
+	
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
      
@@ -172,6 +177,16 @@ public class User {
 	public void setCodePostal(Integer codePostal) {
 		this.codePostal = codePostal;
 	}
+
+	public Set<MeteoPreference> getMeteoPreferences() {
+		return meteoPreferences;
+	}
+
+	public void setMeteoPreferences(Set<MeteoPreference> meteoPreferences) {
+		this.meteoPreferences = meteoPreferences;
+	}
+	
+	
 	
 	
 }
