@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -30,6 +31,7 @@ public class Seance {
     @GeneratedValue
     private Long id;
     
+    @Size(max = 50)
     private String meteoId;
     
     private Long meteoIndex;
