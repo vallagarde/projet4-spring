@@ -1,7 +1,13 @@
 package Pecadillo.isika.al.service;
 
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 import java.util.List;
 import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +29,9 @@ public class MeteoPreferenceService {
 	
 	@Autowired
 	MeteoPreferenceMapper meteoPreferenceMapper;
+	
+	@Autowired
+	NodeRest nodeRest;
 	
 	public List<MeteoPreference> findAllByUser(User user){	
 		return meteoDao.findAll();
@@ -69,6 +78,26 @@ public class MeteoPreferenceService {
 	public MeteoPreference updateMeteoPreference(MeteoPreference meteoPref) {
 		
 		return meteoDao.saveAndFlush(meteoPref);
+	}
+	
+	public void getMeteosValidation(String username) {
+		
+		List<MeteoPreference> meteosPref = findAllByUsername(username);
+		Instant i = Instant.now();
+		String now = i.atZone(ZoneOffset.UTC).format(DateTimeFormatter.ISO_LOCAL_DATE);
+		Instant ii = i.plus(1, ChronoUnit.DAYS);
+        String tmw = ii.atZone(ZoneOffset.UTC).format(DateTimeFormatter.ISO_LOCAL_DATE);
+        
+        for (MeteoPreference meteoPref : meteosPref) {
+        	
+        	meteoPref.setAJD(nodeRest.askMeteo(now, meteoPref.getLatitude(), meteoPref.getLongitude(), meteoPref.getTempMin(), meteoPref.getTempMax(), (meteoPref.getVentMin()), (meteoPref.getVentMax())));
+        	meteoPref.setDMN(nodeRest.askMeteo(tmw, meteoPref.getLatitude(), meteoPref.getLongitude(), meteoPref.getTempMin(), meteoPref.getTempMax(),  (meteoPref.getVentMin()), (meteoPref.getVentMax())));
+
+        	meteoDao.saveAndFlush(meteoPref);
+        }
+        
+        
+		
 	}
 
 }

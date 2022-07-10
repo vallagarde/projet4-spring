@@ -43,5 +43,11 @@ public class MeteoPreference {
 	private double latitude;
 	
 	private double longitude;
+	
+	private Boolean AJD;
+	
+	private Boolean DMN;
+	
+	
 
 }

@@ -37,6 +37,7 @@ import Pecadillo.isika.al.payload.response.MessageResponse;
 import Pecadillo.isika.al.security.jwt.AuthTokenFilter;
 import Pecadillo.isika.al.security.jwt.JwtUtils;
 import Pecadillo.isika.al.security.services.UserDetailsImpl;
+import Pecadillo.isika.al.service.MeteoPreferenceService;
 import Pecadillo.isika.al.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -70,6 +71,9 @@ public class AuthController {
 	@Autowired
 	AuthTokenFilter authTokenFilter;
 	
+	@Autowired
+	MeteoPreferenceService meteoPreferenceService;
+	
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 		
@@ -81,7 +85,11 @@ public class AuthController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
 		
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
+		
+		
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+		meteoPreferenceService.getMeteosValidation(userDetails.getUsername());
+
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());

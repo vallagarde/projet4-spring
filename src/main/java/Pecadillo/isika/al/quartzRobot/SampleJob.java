@@ -5,6 +5,8 @@ import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
@@ -39,6 +41,8 @@ public class SampleJob implements Job {
 		// TODO Auto-generated method stub
 		
 	}
+	
+
     
 }
 
