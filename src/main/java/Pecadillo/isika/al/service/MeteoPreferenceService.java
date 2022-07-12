@@ -80,6 +80,8 @@ public class MeteoPreferenceService {
 		return meteoDao.saveAndFlush(meteoPref);
 	}
 	
+	//Fonction appelée a la connection d'un utilisateur qui vérifie si les météos d'aujourd'hui et demain rentrent dans ses considérations
+	
 	public void getMeteosValidation(String username) {
 		
 		List<MeteoPreference> meteosPref = findAllByUsername(username);
